@@ -758,14 +758,12 @@ public class XML {
 
             // Emit <tagName>
             if (tagName != null) {
-
                 if(tagName.equals("array")){
                     sb.append("<array");
                 }else {
                     sb.append("<object name=");
                     sb.append(tagName);
                 }
-
                 sb.append('>');
                 sb.append('\n');
             }
@@ -803,7 +801,7 @@ public class XML {
                 } else if (value instanceof JSONArray) {
                     ja = (JSONArray)value;
                     int jaLength = ja.length();
-                    if(key.equals("dummy")) {
+                    if(key.equals("array")) {
                         sb.append("<array>");
                     }else {
                         sb.append("<array name=");
@@ -876,28 +874,44 @@ public class XML {
                     sb.append("</string>");
                     sb.append('\n');
                 } else if (value instanceof Number) {
-                    sb.append("<number name=");
-                    sb.append('"');
-                    sb.append(key);
-                    sb.append('"');
-                    sb.append(">");
+                    if(key.equals("number")) {
+                      sb.append("<number>");
+
+                    }else {
+                        sb.append("<number name=");
+                        sb.append('"');
+                        sb.append(key);
+                        sb.append('"');
+                        sb.append(">");
+                    }
                     sb.append(value);
                     sb.append("</number>");
                     sb.append('\n');
                 }else if (value.equals(null)) {
-                    sb.append("<null name=");
-                    sb.append('"');
-                    sb.append(key);
-                    sb.append('"');
-                    sb.append("/>");
+                    if(key.equals("null")) {
+                        sb.append('<');
+                        sb.append(value);
+                        sb.append("/>");
+                    } else {
+                        sb.append("<null name=");
+                        sb.append('"');
+                        sb.append(key);
+                        sb.append('"');
+                        sb.append("/>");
+                    }
                     sb.append('\n');
                 } else if (value instanceof Boolean) {
-                    sb.append("<boolean name=");
-                    sb.append('"');
-                    sb.append(key);
-                    sb.append('"');
-                    sb.append('>');
-                    sb.append(value);
+                    if(key.equals("boolean")) {
+                        sb.append("<boolean>");
+                        sb.append(value);
+                    }else {
+                        sb.append("<boolean name=");
+                        sb.append('"');
+                        sb.append(key);
+                        sb.append('"');
+                        sb.append('>');
+                        sb.append(value);
+                    }
                     sb.append("</boolean>");
                     sb.append('\n');
                 }

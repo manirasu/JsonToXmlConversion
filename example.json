@@ -10,7 +10,3 @@
     "array_example0" : ["red", "green", "blue", "black"],
     "array_example1" : [1, "red", [{ "nested" : true}], { "obj" : false}]
 }
-
-
-
-  

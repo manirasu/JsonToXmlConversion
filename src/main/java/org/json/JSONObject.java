@@ -223,7 +223,6 @@ public class JSONObject {
 
     private void compute(JSONTokener x) {
         char c;
-
         Object eValue = "}";
         String key;
         for (;;) {
@@ -238,9 +237,40 @@ public class JSONObject {
                     x.back();
                    Object val = x.nextValue();
                    if(val != null) {
-                       map.put("dummy",val);
+                       map.put("array",val);
                    }
                    return;
+                case 'f' :
+                case 't':
+                    x.back();
+                    Object boo = x.nextValue();
+                    if(boo != null) {
+                        map.put("boolean", boo);
+                    }
+                    return;
+                case 'n':
+                    x.back();
+                    Object nValue = x.nextValue();
+                    if(nValue != null) {
+                        map.put("null", nValue);
+                    }
+                    return;
+                case 1 :
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case '-':
+                  x.back();
+                  Object num = x.nextValue();
+                  if( num != null) {
+                      map.put("number",num);
+                  }
+                  return;
                 default:
                     x.back();
                     key = x.nextValue().toString();
