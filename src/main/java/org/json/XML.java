@@ -840,20 +840,9 @@ public class XML {
                     sb.append("</array>");
                     sb.append('\n');
                 } else if ("".equals(value)) {
-                    if(key instanceof String) {
-                        sb.append("<string>");
-                        sb.append(key);
-                        sb.append("</String>");
-                        sb.append('\n');
-
-                    }else  {
-                        sb.append("<number>");
-                        sb.append(key);
-                        sb.append("</number>");
-                        sb.append('\n');
-                    }
-                    // Emit a new tag <k>
-
+                    sb.append('<');
+                    sb.append(key);
+                    sb.append("/>");
                 } else if (key == "{" && tagName == null) {
                     sb.append("<object>");
                     sb.append('\n');
@@ -865,14 +854,21 @@ public class XML {
                     sb.append("</object>");
                     sb.append('\n');
                 } else if (value instanceof String && value != "{")  {
-                    sb.append("<string name=" );
-                    sb.append('"');
-                    sb.append(key );
-                    sb.append('"');
-                    sb.append(">");
-                    sb.append(value);
-                    sb.append("</string>");
-                    sb.append('\n');
+                    if(key.equals("boolean") || (key.equals("number")) || (key.equals("null"))) {
+                        sb.append("<string>");
+                        sb.append(value);
+                        sb.append("</String>");
+                        sb.append('\n');
+                    }else {
+                        sb.append("<string name=" );
+                        sb.append('"');
+                        sb.append(key );
+                        sb.append('"');
+                        sb.append(">");
+                        sb.append(value);
+                        sb.append("</string>");
+                        sb.append('\n');
+                    }
                 } else if (value instanceof Number) {
                     if(key.equals("number")) {
                       sb.append("<number>");
