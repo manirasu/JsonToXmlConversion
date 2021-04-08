@@ -833,16 +833,21 @@ public class XML {
                             sb.append('\n');
                         }
                         else {
-                            if(!(val instanceof JSONObject ))
+                            if((val instanceof JSONObject )) {
+                                sb.append(toString(val, null, config));
+                            }else
                             sb.append(toString(val, key, config));
                         }
                     }
                     sb.append("</array>");
                     sb.append('\n');
                 } else if ("".equals(value)) {
-                    sb.append('<');
-                    sb.append(key);
-                    sb.append("/>");
+                    if(key instanceof String) {
+                        sb.append("<string>");
+                        sb.append(key);
+                        sb.append("</String>");
+                        sb.append('\n');
+                    }
                 } else if (key == "{" && tagName == null) {
                     sb.append("<object>");
                     sb.append('\n');
@@ -910,8 +915,7 @@ public class XML {
                     }
                     sb.append("</boolean>");
                     sb.append('\n');
-                }
-                else {
+                } else {
                    if(key == "{" && value =="{")
                        continue;
                     sb.append(toString(value, key, config));
